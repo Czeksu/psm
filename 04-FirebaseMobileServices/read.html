@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="a">
+      <table>
+        <thead>
+          <tr>
+            <td>Car Make</td>
+            <td>Car Model</td>
+            <td>Year</td>
+            <td>VIN</td>
+          </tr>
+        </thead>
+        <tbody id="tabBody"></tbody>
+      </table>
+    </div>
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+    apiKey: "AIzaSyA1Gj9Vdr35wqLZYkIAacR6QyxdyV0Jz7w",
+    authDomain: "psmm-8a59a.firebaseapp.com",
+    databaseURL: "https://psmm-8a59a.firebaseio.com",
+    projectId: "psmm-8a59a",
+    storageBucket: "psmm-8a59a.appspot.com",
+    messagingSenderId: "403127827171",
+    appId: "1:403127827171:web:9893f56b1b738d2f3c63d6",
+    measurementId: "G-0NPLT78SCZ"
+    };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      const tableBody = document.getElementById("tabBody");
+
+      function renderElements(doc) {
+        let tr = `
+            <tr>
+                <td>${doc.data().carMake}</td>
+                <td>${doc.data().carModel}</td>
+                <td>${doc.data().carVIN}</td>
+                <td>${doc.data().carYear}</td>
+            </tr>
+        `;
+        tableBody.innerHTML += tr;
+      }
+      db.collection("cars")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            renderElements(doc);
+          });
+        });
+    </script>
+  </body>
+</html>

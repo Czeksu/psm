@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/7.13.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.0/firebase-firestore.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <h4>Author Name</h4>
+            <input type="text" value="" id="authorName" placeholder="Author Name"><br><br>
+            <h4>Book title</h4>
+            <input type="text" value="" id="title" placeholder="Title"><br><br>
+            <h4>Type</h4>
+            <input type="text" value="" id="type" placeholder="Type"><br><br>
+            <h4>Year</h4>
+            <input type="text" value="" id="year" placeholder="Year"><br><br>
+            <h4>ISBN</h4>
+            <input type="text" value="" id="isbn" placeholder="ISBN"><br><br>
+            <h4>SUBMIT BUTTON HERE!</h4>
+            <button onclick="submit()">SUBMIT</button>
+          </div>
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+        apiKey: "AIzaSyA1Gj9Vdr35wqLZYkIAacR6QyxdyV0Jz7w",
+        authDomain: "psmm-8a59a.firebaseapp.com",
+        databaseURL: "https://psmm-8a59a.firebaseio.com",
+        projectId: "psmm-8a59a",
+        storageBucket: "psmm-8a59a.appspot.com",
+        messagingSenderId: "403127827171",
+        appId: "1:403127827171:web:d170c4fc63f3da273c63d6",
+        measurementId: "G-TMTWNHE2P3"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        //const book = document.querySelector("#root");
+
+        const ids = ["authorName", "title", "type", "year", "isbn"];
+        let values = new Array(5).fill("");
+        for (let id in ids) {
+        let el = document.getElementById(ids[id]);
+        el.addEventListener("change", (e) => {
+          values[id] = e.target.value;
+        });
+      }
+      function submit() {
+        db.collection("myBook").add({
+            author: values[0],
+            title: values[1],
+            type: values[2],
+            year: values[3].toString(),
+            isbn: values[4]
+        }).then(cb => console.log("Book added successfully")).catch(er => console.log(`ERROR: ${e.message}`))
+      }
+    </script>
+  </body>
+</html>

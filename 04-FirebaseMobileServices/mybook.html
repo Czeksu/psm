@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/7.13.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.13.0/firebase-firestore.js"></script>
+    </head>
+    <body>
+        <div id="a">
+
+        </div>  
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+    apiKey: "AIzaSyA1Gj9Vdr35wqLZYkIAacR6QyxdyV0Jz7w",
+    authDomain: "psmm-8a59a.firebaseapp.com",
+    databaseURL: "https://psmm-8a59a.firebaseio.com",
+    projectId: "psmm-8a59a",
+    storageBucket: "psmm-8a59a.appspot.com",
+    messagingSenderId: "403127827171",
+    appId: "1:403127827171:web:d170c4fc63f3da273c63d6",
+    measurementId: "G-TMTWNHE2P3"
+  };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const book = document.querySelector("#a");
+
+        function renderElements(doc) {
+        let authorName = doc.data().authorName;
+        let title = doc.data().title;
+        let type = doc.data().type;
+        let year = doc.data().year;
+        let ISBN = doc.data().isbn;
+        book.innerHTML += "Author: " + name + "<br> " + "Title: " + title + "<br>" + "Type: " + type + "<br> " + "Year: " + year + "<br>" + "ISBN: " + ISBN + "<br><br>";
+        }
+
+      db.collection("myBook")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            renderElements(doc);
+          });
+        });
+    </script>
+  </body>
+</html>
